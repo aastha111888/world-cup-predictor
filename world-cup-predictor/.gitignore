@@ -1,0 +1,20 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Data — often large; keep out of git
+data/
+
+# OS / editor cruft
+.DS_Store
+.vscode/
+.idea/
+
+# Environment secrets
+.env
