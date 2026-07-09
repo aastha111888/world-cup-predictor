@@ -1,0 +1,14 @@
+# Teams still in the knockout bracket, in bracket order (one per line).
+# Line 1 plays line 2, line 3 plays line 4, and the winners meet, etc.
+# The number of teams must be a power of two (8, 4, 2).
+# Blank lines and lines starting with '#' are ignored.
+# Edit this file as teams are eliminated, then re-run: python simulation.py
+
+Brazil
+France
+Argentina
+Spain
+Netherlands
+Portugal
+England
+Germany

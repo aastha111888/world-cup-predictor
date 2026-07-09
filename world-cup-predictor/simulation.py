@@ -12,6 +12,7 @@ results come in and teams are eliminated, edit the team list and re-run.
 Run it with:   python simulation.py
 """
 
+import argparse
 from collections import defaultdict
 
 import numpy as np
@@ -159,28 +160,42 @@ def find_team(substring):
     return [t for t in team_stats.index if s in t.lower()]
 
 
-if __name__ == "__main__":
-    # -----------------------------------------------------------------------
-    # EDIT THIS LIST as the tournament progresses.
-    # List the teams still in the knockout bracket, in bracket order:
-    #   remaining[0] vs remaining[1], remaining[2] vs remaining[3], ...
-    # The length must be a power of two (8 = quarterfinals, 4 = semis, etc.).
-    #
-    # If a name isn't found, run find_team('...') to see the exact spelling,
-    # e.g.  python -c "from simulation import find_team; print(find_team('kor'))"
-    # -----------------------------------------------------------------------
-    remaining = [
-        'Brazil', 'France',
-        'Argentina', 'Spain',
-        'Netherlands', 'Portugal',
-        'England', 'Germany',
-    ]
+def load_teams(path="teams.txt"):
+    """Read teams (bracket order) from a text file: one team per line.
+    Blank lines and lines starting with '#' are ignored."""
+    teams = []
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#"):
+                teams.append(line)
+    return teams
 
-    results = run(remaining, n=10000)
+
+if __name__ == "__main__":
+    # Teams are read from teams.txt (one per line, in bracket order):
+    #   line 1 plays line 2, line 3 plays line 4, and the winners meet.
+    # The number of teams must be a power of two (8 = quarterfinals, 4 = semis).
+    # Edit teams.txt as the tournament progresses, then re-run.
+    #
+    # If a name isn't recognized, look up the exact spelling with:
+    #   python -c "from simulation import find_team; print(find_team('kor'))"
+    parser = argparse.ArgumentParser(
+        description="Monte Carlo knockout-stage tournament simulator.")
+    parser.add_argument("-f", "--file", default="teams.txt",
+                        help="Path to the teams file (default: teams.txt).")
+    parser.add_argument("-n", "--sims", type=int, default=10000,
+                        help="Number of simulations to run (default: 10000).")
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Random seed (default: 42).")
+    args = parser.parse_args()
+
+    teams = load_teams(args.file)
+    results = run(teams, n=args.sims, seed=args.seed)
 
     pd.set_option('display.width', 140)
     pd.set_option('display.float_format', lambda v: f'{v:6.1%}')
-    print("\nSimulated 10,000 tournaments from the current bracket:\n")
+    print(f"\nSimulated {args.sims:,} tournaments from the current bracket:\n")
     print(results)
     print(f"\nMost likely champion: {results.index[0]} "
           f"({results['Champion'].iloc[0]:.1%})")
