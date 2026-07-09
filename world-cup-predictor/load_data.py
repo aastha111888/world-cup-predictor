@@ -3,9 +3,6 @@ import pandas as pd
 def load_data():
     df = pd.read_csv('data/results.csv')
 
-    print(df.head())
-    print(df.info())
-    print(df.shape)
 
     df['date'] = pd.to_datetime(df['date'])
     df = df.sort_values(by='date')

@@ -3,12 +3,18 @@
 # The number of teams must be a power of two (8, 4, 2).
 # Blank lines and lines starting with '#' are ignored.
 # Edit this file as teams are eliminated, then re-run: python simulation.py
+#
+# 2026 World Cup quarterfinals (as of July 9, 2026):
+#   France vs Morocco  ->  winner meets winner of Spain vs Belgium
+#   Spain vs Belgium
+#   Norway vs England  ->  winner meets winner of Argentina vs Switzerland
+#   Argentina vs Switzerland
 
-Brazil
 France
-Argentina
+Morocco
 Spain
-Netherlands
-Portugal
+Belgium
+Norway
 England
-Germany
+Argentina
+Switzerland
